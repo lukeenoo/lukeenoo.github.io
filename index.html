@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Mytems - Professional PHP Web Solutions And Development Agency</title>
+
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      line-height: 1.5;
+      background-color: #000000;
+
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(39, 39, 42, 0.5) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(0, 0, 0, 0.5) 0px, transparent 50%),
+        radial-gradient(at 40% 20%, rgba(0, 0, 0, 0.5) 0px, transparent 50%),
+        radial-gradient(at 60% 80%, rgba(39, 39, 42, 0.5) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(0, 0, 0, 0.5) 0px, transparent 50%);
+      background-attachment: fixed;
+      background-size: 200% 200%;
+    }
+
+    @keyframes gradient-move {
+      0% {
+        background-position: 0% 0%;
+      }
+      50% {
+        background-position: 100% 100%;
+      }
+      100% {  
+        background-position: 0% 0%;
+      }
+    }
+
+    body {
+      animation: gradient-move 30s ease infinite;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: 600;
+      letter-spacing: -0.025em;
+    }
+    
+    .font-semibold {
+      font-weight: 500;
+    }
+    
+    .font-bold {
+      font-weight: 600;
+    }
+
+    .vercel-shadow {
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 2px 4px rgba(0, 0, 0, 0.02), 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .testimonial-track {
+      animation: slide 15s linear infinite;
+      will-change: transform;
+    }
+  
+    .testimonial-track:hover {
+      animation-play-state: paused;
+    }
+  
+    @keyframes slide {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(calc(-100% / 3));
+      }
+    }
+
+    .faq-item.active .faq-arrow {
+      transform: rotate(180deg);
+    }
+  
+    .faq-item.active .faq-answer {
+      max-height: 300px;
+      padding-top: 0;
+      padding-bottom: 1.25rem;
+    }
+
+    .gradient-wave-text {
+      position: relative;
+      background: linear-gradient(to bottom right, #ffffff 0%, #a0a0a0 40%, #606060 100%);
+      background-clip: text;
+     -webkit-background-clip: text;
+      color: transparent;
+      overflow: hidden;
+    }
+  
+    .gradient-wave-text::after {
+      content: 'Build robust web solutions with professional development';
+      position: absolute;
+      left: 0;
+      top: 0;
+      background: linear-gradient(
+        120deg,
+        transparent 0%,
+        transparent 30%,
+        rgba(255, 255, 255, 0.8) 32%,
+        transparent 34%,
+        transparent 100%
+      );
+      background-clip: text;
+      -webkit-background-clip: text;
+      animation: wave-sweep 5s infinite linear;
+      background-size: 200% 100%;
+      width: 100%;
+      height: 100%;
+    }
+  
+    @keyframes wave-sweep {
+      0% {
+        background-position: -100% 0;
+      }
+     100% {
+        background-position: 200% 0;
+      }  
+    }
+
+      /* Form stages */
+  .form-stage {
+    display: none;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  
+  .form-stage.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Vercel-like shadow */
+  .vercel-shadow {
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 2px 4px rgba(0, 0, 0, 0.02), 0 4px 16px rgba(0, 0, 0, 0.08);
+  }
+  
+  /* Form inputs */
+  input, textarea {
+    backdrop-filter: blur(10px);
+  }
+  
+  /* Submit button hover effect */
+  button[type="submit"]:hover #submit-arrow {
+    transform: translateX(3px);
+  }
+
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+</head>
+<body id="home" class="bg-neutral-950 text-neutral-200 min-h-screen pt-20">
+
+  <nav class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50  backdrop-blur-md border border-neutral-800 shadow-sm rounded-xl w-[88%] max-w-6xl px-3 py-0.5">
+    <div class="flex items-center justify-between h-12">
+      <a href="#home" class="flex items-center space-x-2">
+        <img src="mytems.png" alt="Logo" class="h-7 w-auto">
+      </a>
+      <button id="mobile-menu-button" class="block md:hidden text-neutral-400 hover:text-white">
+        <i class="fas fa-bars text-lg"></i>
+      </button> 
+      <div class="hidden md:flex space-x-5 text-sm font-medium">
+        <a href="#services" class="text-neutral-400 hover:text-white px-2 py-1 transition">Services</a>
+        <a href="#projects" class="text-neutral-400 hover:text-white px-2 py-1 transition">Projects</a>
+        <a href="#testimonials" class="text-neutral-400 hover:text-white px-2 py-1 transition">Testimonials</a>
+        <a href="#faq" class="text-neutral-400 hover:text-white px-2 py-1 transition">FAQ</a>
+        <a href="#contact" class="bg-white text-neutral-900 px-3 py-1 rounded-md font-semibold hover:bg-neutral-200 transition">Contact</a>
+      </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden py-4 border-t border-neutral-800 mt-2 space-y-3">
+      <a href="#services" class="block text-neutral-400 hover:text-white transition py-1">Services</a>
+      <a href="#projects" class="block text-neutral-400 hover:text-white transition py-1">Projects</a>
+      <a href="#testimonials" class="block text-neutral-400 hover:text-white transition py-1">Testimonials</a>
+      <a href="#faq" class="block text-neutral-400 hover:text-white transition py-1">FAQ</a>
+      <a href="#contact" class="block bg-white text-neutral-900 px-3 py-1 rounded-md font-semibold hover:bg-neutral-200 transition text-center mt-3 w-full">Contact</a>
+    </div>
+  </nav>
+
+  <main class="px-24 sm:px-8">
+
+    <section class="pt-30 pb-20 px-4 max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div class="space-y-6">
+      <div class="inline-flex items-center px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/70 text-xs font-medium mb-6">
+        <span class="flex h-1.5 w-1.5 rounded-full bg-white mr-2"></span>
+        Professional Devlopment Solutions
+        </div>
+          <h1 class="text-4xl md:text-5xl font-bold gradient-wave-text tracking-tight">
+            Build robust web solutions with professional development
+          </h1>
+          <p class="text-neutral-400 text-lg">
+            We create scalable, secure and high-performance web applications tailored to your needs using modern frameworks.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 pt-4">
+            <a href="#contact" class="bg-white text-black font-medium px-3 py-1 rounded-lg text-center transition">
+              Get Started
+            </a>
+            <a href="#projects" class="border border-neutral-700 hover:border-neutral-600 text-neutral-300 font-medium px-3 py-1 rounded-lg text-center transition flex items-center justify-center">
+              <i class="fas fa-play-circle mr-2 text-white-500"></i>
+              See Our Work
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="pt-44 sm:px-8">
+      <div class="max-w-6xl mx-auto px-4 ">
+        <div class="mb-16 max-w-3xl">
+          <div class="inline-flex items-center px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/70 text-xs font-medium mb-6">
+            <span class="flex h-1.5 w-1.5 rounded-full bg-white mr-2"></span>
+            Our Services
+          </div>
+          <h2 class="text-3xl md:text-4xl font-bold bg-gradient-to-tr from-white via-gray to-gray bg-clip-text text-transparent mb-6 tracking-tight">
+            Expert PHP solutions for modern web applications
+          </h2>
+          <p class="text-neutral-400 text-lg">
+            We combine technical excellence with strategic thinking to deliver PHP solutions that drive business growth.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div class="group relative p-6 bg-gradient-to-b from-white/[0.07] to-white/[0.03] rounded-xl border border-white/10 transition-all duration-300 hover:border-white/20 hover:from-white/[0.09] hover:to-white/[0.05]">
+            <div class="flex flex-col h-full">
+              <div class="mb-5">
+                <div class="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-white/10 mb-4">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-white">
+                    <path d="M20 4L3 9.31372L10.5 13.5M20 4L14.5 21L10.5 13.5M20 4L10.5 13.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-white mb-2">Custom Web Development</h3>
+                <p class="text-neutral-400">Tailored PHP solutions built from the ground up to match your specific business requirements and performance needs.</p>
+             </div>
+              <div class="mt-auto pt-4">
+                <div class="flex items-center text-white/70 text-sm font-medium group-hover:text-white transition-colors">
+                  <span>Learn more</span>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="ml-1 transition-transform group-hover:translate-x-0.5">
+                    <path d="M6.5 12.5L11 8L6.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+               </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="group relative p-6 bg-gradient-to-b from-white/[0.07] to-white/[0.03] rounded-xl border border-white/10 transition-all duration-300 hover:border-white/20 hover:from-white/[0.09] hover:to-white/[0.05]">
+            <div class="flex flex-col h-full">
+              <div class="mb-5">
+                <div class="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-white/10 mb-4">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-white">
+                    <path d="M12 16.5V14M7 10.0288C7.47142 10 8.05259 10 8.8 10H15.2C15.9474 10 16.5286 10 17 10.0288M7 10.0288C6.41168 10.0647 5.99429 10.1455 5.63803 10.327C5.07354 10.6146 4.6146 11.0735 4.32698 11.638C4 12.2798 4 13.1198 4 14.8V16.2C4 17.8802 4 18.7202 4.32698 19.362C4.6146 19.9265 5.07354 20.3854 5.63803 20.673C6.27976 21 7.11984 21 8.8 21H15.2C16.8802 21 17.7202 21 18.362 20.673C18.9265 20.3854 19.3854 19.9265 19.673 19.362C20 18.7202 20 17.8802 20 16.2V14.8C20 13.1198 20 12.2798 19.673 11.638C19.3854 11.0735 18.9265 10.6146 18.362 10.327C18.0057 10.1455 17.5883 10.0647 17 10.0288M7 10.0288V8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8V10.0288" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-white mb-2">Laravel Development</h3>
+                <p class="text-neutral-400">Modern web applications built with Laravel, focusing on clean architecture, security, and maintainable code.</p>
+              </div>
+              <div class="mt-auto pt-4">
+                <div class="flex items-center text-white/70 text-sm font-medium group-hover:text-white transition-colors">
+                  <span>Learn more</span>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="ml-1 transition-transform group-hover:translate-x-0.5">
+                    <path d="M6.5 12.5L11 8L6.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="group relative p-6 bg-gradient-to-b from-white/[0.07] to-white/[0.03] rounded-xl border border-white/10 transition-all duration-300 hover:border-white/20 hover:from-white/[0.09] hover:to-white/[0.05]">
+            <div class="flex flex-col h-full">
+              <div class="mb-5">
+                <div class="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-white/10 mb-4">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-white">
+                    <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M3.6 8.5H20.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M3.6 15.5H20.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M12 20.4999C14.4853 20.4999 16.5 16.8156 16.5 11.9999C16.5 7.18439 14.4853 3.49994 12 3.49994C9.51472 3.49994 7.5 7.18439 7.5 11.9999C7.5 16.8156 9.51472 20.4999 12 20.4999Z" stroke="currentColor" stroke-width="1.5"/>
+                  </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-white mb-2">API Development</h3>
+                <p class="text-neutral-400">Robust and scalable API development with PHP, enabling seamless integration with front-end applications and third-party services.</p>
+              </div>
+              <div class="mt-auto pt-4">
+                <div class="flex items-center text-white/70 text-sm font-medium group-hover:text-white transition-colors">
+                  <span>Learn more</span>
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="ml-1 transition-transform group-hover:translate-x-0.5">
+                    <path d="M6.5 12.5L11 8L6.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="max-w-6xl mx-auto px-4 py-22 sm:px-8">
+        <div class="mb-16 max-w-3xl">
+          <div class="inline-flex items-center px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/70 text-xs font-medium mb-6">
+            <span class="flex h-1.5 w-1.5 rounded-full bg-white mr-2"></span>
+            Recent Projects
+          </div>
+          <h2 class="text-3xl md:text-4xl font-bold bg-gradient-to-tr from-white via-gray to-gray bg-clip-text text-transparent mb-6 tracking-tight">
+            PHP excellence in <span class="relative text-white">
+              action
+              <svg width="100%" height="6" viewBox="0 0 140 6" fill="none" xmlns="http://www.w3.org/2000/svg" class="absolute left-0 -bottom-1 w-full overflow-visible">
+                <path d="M2 3.5C2 3.5 40 0.999998 70 3.5C100 6 138 3.5 138 3.5" stroke="white" stroke-width="3" stroke-linecap="round"/>
+              </svg>
+            </span>
+          </h2>
+          <p class="text-neutral-400 text-lg">
+            We deliver performant, secure, and scalable PHP applications that solve real business challenges. Here's a glimpse of our recent work.
+          </p>
+        </div>
+
+        <div class="group">
+          <div class="mb-6 overflow-hidden rounded-xl relative aspect-video bg-white/5">
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="w-full h-full bg-gradient-to-br from-neutral-800 to-black opacity-40 absolute"></div>
+              <img src="/api/placeholder/720/405" alt="aimcone" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-500" />
+              <div class="absolute top-0 left-0 w-full h-full bg-black opacity-0 group-hover:opacity-20 transition-opacity"></div>
+              <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div class="bg-white text-black font-medium px-5 py-2.5 rounded-lg text-sm"><a href="https://aimcone.com" target="_blank">View Live</a></div>
+              </div>
+            </div>
+          </div>
+          <div class="space-y-3">
+            <div class="flex items-center space-x-3">
+              <div class="text-xs font-medium px-2.5 py-1 rounded bg-white/10 text-white/70">Three.js</div>
+              <div class="text-xs font-medium px-2.5 py-1 rounded bg-white/10 text-white/70">AJAX</div>
+              <div class="text-xs font-medium px-2.5 py-1 rounded bg-white/10 text-white/70">PHP</div>
+              <div class="text-xs font-medium px-2.5 py-1 rounded bg-white/10 text-white/70">MYSQL</div>
+            </div>
+            <h3 class="text-xl font-semibold text-white group-hover:text-white/90 transition-colors">Aimcone.com</h3>
+            <p class="text-neutral-400"> A fully immersive first-person game built with real-time 3D rendering, featuring interactive physics. Designed with optimized asset loading.</p>
+            <div class="pt-4 flex items-center text-white/70 text-sm font-medium group-hover:text-white transition-colors">
+              <span><a href="https://aimcone.com" target="_blank">View Live</a></span>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="ml-1 transition-transform group-hover:translate-x-0.5">
+                <path d="M6.5 12.5L11 8L6.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="testimonials" class="py-12 overflow-hidden relative">
+      <div class="max-w-6xl mx-auto px-4 sm:px-8">
+        <div class="mb-16 max-w-3xl">
+          <div class="inline-flex items-center px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/70 text-xs font-medium mb-6">
+           <span class="flex h-1.5 w-1.5 rounded-full bg-white mr-2"></span>
+            Client Testimonials
+          </div>
+          <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 tracking-tight">
+            Trusted by <span class="relative">developers
+            <svg width="100%" height="6" viewBox="0 0 140 6" fill="none" xmlns="http://www.w3.org/2000/svg" class="absolute left-0 -bottom-1 w-full overflow-visible">
+              <path d="M2 3.5C2 3.5 40 0.999998 70 3.5C100 6 138 3.5 138 3.5" stroke="white" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+          </h2>
+          <p class="text-neutral-400 text-lg">
+            Don't just take our word for it. Here's what our clients say about our PHP development services.
+          </p>
+        </div>
+
+        <div class="relative overflow-hidden">
+          <div class="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-neutral-950 to-transparent z-10 pointer-events-none"></div>
+          <div class="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-neutral-950 to-transparent z-10 pointer-events-none"></div>
+      
+          <div class="relative w-full overflow-x-visible">
+            <div class="testimonial-track flex gap-8 w-[300%] md:w-[200%] lg:w-[150%] py-4">
+              <div class="testimonial-slide flex-shrink-0 w-full md:w-1/2 lg:w-1/3 p-6 bg-gradient-to-b from-white/[0.07] to-white/[0.03] rounded-xl border border-white/10 transition-all duration-300 hover:border-white/20">
+                <div class="flex items-center mb-6">
+                  <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center mr-4 overflow-hidden">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Client" class="w-full h-full object-cover">
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-white">Michael K.</h4>
+                    <p class="text-sm text-neutral-400">CTO, TechCorp</p>
+                  </div>
+                </div>
+                <p class="text-neutral-300 mb-4">"The PHP backend they built for our SaaS platform handles 50K requests per minute without breaking a sweat. Their attention to detail in optimization was impressive."</p>
+                <div class="flex text-white">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+              </div>
+    
+              <div class="testimonial-slide flex-shrink-0 w-full md:w-1/2 lg:w-1/3 p-6 bg-gradient-to-b from-white/[0.07] to-white/[0.03] rounded-xl border border-white/10 transition-all duration-300 hover:border-white/20">
+                <div class="flex items-center mb-6">
+                  <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center mr-4 overflow-hidden">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Client" class="w-full h-full object-cover">
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-white">Sarah L.</h4>
+                    <p class="text-sm text-neutral-400">Product Manager, FinTech Inc</p>
+                  </div>
+                </div>
+                <p class="text-neutral-300 mb-4">"Their Laravel expertise saved us months of development time. The code quality was exceptional and their documentation made handoff seamless."</p>
+                <div class="flex text-white">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half-alt"></i>
+                </div>
+              </div>
+    
+              <div class="testimonial-slide flex-shrink-0 w-full md:w-1/2 lg:w-1/3 p-6 bg-gradient-to-b from-white/[0.07] to-white/[0.03] rounded-xl border border-white/10 transition-all duration-300 hover:border-white/20">
+                <div class="flex items-center mb-6">
+                  <div class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center mr-4 overflow-hidden">
+                    <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Client" class="w-full h-full object-cover">
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-white">David R.</h4>
+                    <p class="text-sm text-neutral-400">Founder, StartupX</p>
+                  </div>
+                </div>
+                <p class="text-neutral-300 mb-4">"We went from concept to MVP in 6 weeks thanks to their PHP API development. Their team understood our vision immediately and delivered beyond expectations."</p>
+                <div class="flex text-white">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="py-24">
+
+      <!-- grid section -->
+      <div class="max-w-6xl mx-auto px-4 sm:px-8">
+
+        <div class="mb-16 max-w-3xl">
+          <div class="inline-flex items-center px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/70 text-xs font-medium mb-6">
+            <span class="flex h-1.5 w-1.5 rounded-full bg-white mr-2"></span>
+            Frequently Asked Questions
+          </div>
+          <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 tracking-tight">
+           Answers to <span class="relative">common questions
+            <svg width="100%" height="6" viewBox="0 0 140 6" fill="none" xmlns="http://www.w3.org/2000/svg" class="absolute left-0 -bottom-1 w-full overflow-visible">
+              <path d="M2 3.5C2 3.5 40 0.999998 70 3.5C100 6 138 3.5 138 3.5" stroke="white" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+          </h2>
+          <p class="text-neutral-400 text-lg">
+            Everything you need to know about our PHP development services. Can't find what you're looking for? Contact us directly.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- grid section start -->
+          <div class="faq-item bg-gradient-to-b from-white/[0.07] to-white/[0.03] rounded-xl border border-white/10 overflow-hidden transition-all duration-300 hover:border-white/20">
+            <button class="faq-question w-full text-left px-6 py-5 flex justify-between items-center">
+              <h3 class="font-semibold text-white text-lg">What PHP frameworks do you specialize in?</h3>
+              <svg class="faq-arrow w-5 h-5 text-white transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            <div class="faq-answer px-6 pb-5 pt-0 text-neutral-300 overflow-hidden max-h-0 transition-all duration-300">
+              <p>We have extensive experience with Laravel, Symfony, CodeIgniter, and custom PHP solutions. Our team selects the framework that best fits your project requirements, with Laravel being our most frequently used for its elegant syntax and robust ecosystem.</p>
+            </div>
+          </div>
+
+          <div class="faq-item bg-gradient-to-b from-white/[0.07] to-white/[0.03] rounded-xl border border-white/10 overflow-hidden transition-all duration-300 hover:border-white/20">
+            <button class="faq-question w-full text-left px-6 py-5 flex justify-between items-center">
+              <h3 class="font-semibold text-white text-lg">How do you ensure code quality and security?</h3>
+              <svg class="faq-arrow w-5 h-5 text-white transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            <div class="faq-answer px-6 pb-5 pt-0 text-neutral-300 overflow-hidden max-h-0 transition-all duration-300">
+              <p>We implement multiple layers of quality assurance including: code reviews, static analysis tools, unit testing (PHPUnit), and security audits. All our code follows OWASP security practices and we conduct regular dependency updates to patch vulnerabilities.</p>
+            </div>
+          </div>
+
+          <div class="faq-item bg-gradient-to-b from-white/[0.07] to-white/[0.03] rounded-xl border border-white/10 overflow-hidden transition-all duration-300 hover:border-white/20">
+            <button class="faq-question w-full text-left px-6 py-5 flex justify-between items-center">
+              <h3 class="font-semibold text-white text-lg">What's your typical development process?</h3>
+              <svg class="faq-arrow w-5 h-5 text-white transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+           </button>
+            <div class="faq-answer px-6 pb-5 pt-0 text-neutral-300 overflow-hidden max-h-0 transition-all duration-300">
+              <p>Our agile process includes: 1) Discovery & planning, 2) UI/UX design, 3) Development sprints with bi-weekly demos, 4) QA testing, and 5) Deployment & maintenance. We use Jira for project tracking and provide regular progress updates.</p>
+            </div>
+          </div>
+
+          <div class="faq-item bg-gradient-to-b from-white/[0.07] to-white/[0.03] rounded-xl border border-white/10 overflow-hidden transition-all duration-300 hover:border-white/20">
+            <button class="faq-question w-full text-left px-6 py-5 flex justify-between items-center">
+              <h3 class="font-semibold text-white text-lg">Can you work with our existing codebase?</h3>
+              <svg class="faq-arrow w-5 h-5 text-white transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            <div class="faq-answer px-6 pb-5 pt-0 text-neutral-300 overflow-hidden max-h-0 transition-all duration-300">
+              <p>Absolutely. We frequently onboard to existing projects for enhancements, optimizations, or maintenance. Our team can conduct a code audit first to understand the architecture and identify any technical debt before beginning work.</p>
+            </div>
+          </div>
+
+          <div class="faq-item bg-gradient-to-b from-white/[0.07] to-white/[0.03] rounded-xl border border-white/10 overflow-hidden transition-all duration-300 hover:border-white/20">
+           <button class="faq-question w-full text-left px-6 py-5 flex justify-between items-center">
+              <h3 class="font-semibold text-white text-lg">What about ongoing maintenance?</h3>
+              <svg class="faq-arrow w-5 h-5 text-white transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            <div class="faq-answer px-6 pb-5 pt-0 text-neutral-300 overflow-hidden max-h-0 transition-all duration-300">
+              <p>We offer flexible maintenance plans including: security updates, performance monitoring, bug fixes, and feature enhancements. Most clients opt for our monthly retainer model which provides priority support and discounted rates.</p>
+            </div>
+          </div>
+
+          <div class="faq-item bg-gradient-to-b from-white/[0.07] to-white/[0.03] rounded-xl border border-white/10 overflow-hidden transition-all duration-300 hover:border-white/20">
+            <button class="faq-question w-full text-left px-6 py-5 flex justify-between items-center">
+              <h3 class="font-semibold text-white text-lg">How do you handle project pricing?</h3>
+              <svg class="faq-arrow w-5 h-5 text-white transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </button>
+            <div class="faq-answer px-6 pb-5 pt-0 text-neutral-300 overflow-hidden max-h-0 transition-all duration-300">
+              <p>We offer both fixed-price (for well-defined projects) and time-and-materials (for agile development) pricing models. After understanding your requirements, we'll provide a detailed estimate with transparent breakdown of costs.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="py-24">
+      <div class="max-w-3xl mx-auto px-4 sm:px-8">
+        <div class="mb-16 text-center">
+          <div class="inline-flex items-center px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/70 text-xs font-medium mb-6">
+            <span class="flex h-1.5 w-1.5 rounded-full bg-white mr-2"></span>
+            Get in Touch
+          </div>
+          <h2 class="text-3xl md:text-4xl font-bold text-white mb-6 tracking-tight ">
+            Ready to <span class="relative">start your project?
+            <svg width="100%" height="6" viewBox="0 0 140 6" fill="none" xmlns="http://www.w3.org/2000/svg" class="absolute left-0 -bottom-1 w-full overflow-visible">
+              <path d="M2 3.5C2 3.5 40 0.999998 70 3.5C100 6 138 3.5 138 3.5" stroke="white" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+          </h2>
+          <p class="text-neutral-400 text-lg max-w-2xl mx-auto">
+            Tell us about your PHP project needs and we'll get back to you within 24 hours.
+          </p>
+        </div>
+
+    <!-- Multi-stage contact form -->
+    <div class="bg-gradient-to-b from-white/[0.07] to-white/[0.03] rounded-xl border border-white/10 p-8 md:p-10 vercel-shadow">
+      <!-- Stage 1: Form -->
+      <div id="form-stage" class="form-stage active">
+        <form id="contact-form" class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label for="name" class="block text-sm font-medium text-neutral-300 mb-2">Name</label>
+              <input type="text" id="name" name="name" required 
+                     class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-transparent transition">
+            </div>
+            <div>
+              <label for="email" class="block text-sm font-medium text-neutral-300 mb-2">Email</label>
+              <input type="email" id="email" name="email" required 
+                     class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-transparent transition">
+            </div>
+          </div>
+          <div>
+            <label for="subject" class="block text-sm font-medium text-neutral-300 mb-2">Subject</label>
+            <input type="text" id="subject" name="subject" required 
+                   class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-transparent transition">
+          </div>
+          <div>
+            <label for="message" class="block text-sm font-medium text-neutral-300 mb-2">Project Details</label>
+            <textarea id="message" name="message" rows="4" required 
+                      class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/30 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-transparent transition"></textarea>
+          </div>
+          <div class="pt-2">
+            <button type="submit" class="w-full bg-white text-black font-medium px-6 py-3.5 rounded-lg hover:bg-neutral-200 transition flex items-center justify-center">
+              Send Message
+              <svg id="submit-arrow" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" class="ml-2 transition-transform">
+                <path d="M4.16663 10H15.8333M15.8333 10L10 4.16669M15.8333 10L10 15.8334" stroke="currentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Stage 2: Processing -->
+      <div id="processing-stage" class="form-stage">
+        <div class="text-center py-12">
+          <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/10 mb-6">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-white animate-spin">
+              <path d="M12 2V6M12 18V22M6 12H2M22 12H18M19.0784 19.0784L16.25 16.25M19.0784 4.99994L16.25 7.82837M4.92157 19.0784L7.75 16.25M4.92157 4.99994L7.75 7.82837" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-white mb-2">Processing your request</h3>
+          <p class="text-neutral-400">We're sending your message...</p>
+        </div>
+      </div>
+
+      <!-- Stage 3: Success -->
+      <div id="success-stage" class="form-stage">
+        <div class="text-center py-12">
+          <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-500/10 mb-6">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-green-500">
+              <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-white mb-2">Message sent successfully</h3>
+          <p class="text-neutral-400 mb-6">We'll get back to you within 24 hours.</p>
+          <button id="reset-form" class="text-sm font-medium text-white bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg transition">
+            Send another message
+          </button>
+        </div>
+      </div>
+
+      <!-- Stage 4: Error -->
+      <div id="error-stage" class="form-stage">
+        <div class="text-center py-12">
+          <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-red-500/10 mb-6">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-red-500">
+              <path d="M12 8V12M12 16H12.01M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold text-white mb-2">Something went wrong</h3>
+          <p class="text-neutral-400 mb-6" id="error-message">Please try again later.</p>
+          <button id="try-again" class="text-sm font-medium text-white bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg transition">
+            Try again
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+  </main>
+
+  <footer class="border-t border-white/10 bg-gradient-to-b from-white/[0.02] to-transparent">
+  <div class="max-w-6xl mx-auto px-4 sm:px-8 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+      <div class="md:col-span-2">
+
+        <div class="flex items-center space-x-2 mb-4">
+          <img src="mytems.png" alt="Mytems Logo" class="h-7 w-auto">
+          <span class="text-white font-semibold text-lg">Mytems</span>
+        </div>
+        <p class="text-neutral-400 text-sm">Professional PHP web solutions and development agency focused on building scalable, secure applications.</p>
+        <p class="text-neutral-500 text-sm mb-4 md:mb-0">© 2023 Mytems. All rights reserved.</p>
+
+      </div>
+
+      <div>
+        <h3 class="text-white font-medium mb-4 text-sm uppercase tracking-wider">Quick Links</h3>
+        <ul class="space-y-3">
+          <li><a href="#services" class="text-neutral-400 hover:text-white transition text-sm">Services</a></li>
+          <li><a href="#projects" class="text-neutral-400 hover:text-white transition text-sm">Projects</a></li>
+          <li><a href="#testimonials" class="text-neutral-400 hover:text-white transition text-sm">Testimonials</a></li>
+          <li><a href="#faq" class="text-neutral-400 hover:text-white transition text-sm">FAQ</a></li>
+          <li><a href="#contact" class="text-neutral-400 hover:text-white transition text-sm">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-white font-medium mb-4 text-sm uppercase tracking-wider">Contact</h3>
+        <ul class="space-y-3">
+
+          <li class="flex items-center text-neutral-400 text-sm">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+            </svg>
+            hello@mytems.dev
+          </li>
+
+          <li class="flex items-center text-neutral-400 text-sm">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+            </svg>
+            +1 (555) 123-4567
+          </li>
+
+          <li class="flex items-center text-neutral-400 text-sm">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+            San Francisco, CA
+          </li>
+
+          <li class="flex items-center text-neutral-400 text-sm">
+            <svg class="h-5 w-5 mr-1" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path>
+            </svg>
+            Github
+          </li>
+
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</footer>
+  
+</body>
+</html>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('contact-form');
+    const formStage = document.getElementById('form-stage');
+    const processingStage = document.getElementById('processing-stage');
+    const successStage = document.getElementById('success-stage');
+    const errorStage = document.getElementById('error-stage');
+    const resetBtn = document.getElementById('reset-form');
+    const tryAgainBtn = document.getElementById('try-again');
+    const errorMessage = document.getElementById('error-message');
+    
+    function setActiveStage(stage) {
+      document.querySelectorAll('.form-stage').forEach(s => s.classList.remove('active'));
+      stage.classList.add('active');
+    }
+    
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      setActiveStage(processingStage);
+      
+      setTimeout(() => {
+        const isSuccess = Math.random() > 0.2;
+        
+        if (isSuccess) {
+          setActiveStage(successStage);
+          form.reset();
+        } else {
+          errorMessage.textContent = "Network error occurred. Please check your connection and try again.";
+          setActiveStage(errorStage);
+        }
+      }, 2000);
+    });
+    
+    resetBtn.addEventListener('click', function() {
+      setActiveStage(formStage);
+    });
+    
+    tryAgainBtn.addEventListener('click', function() {
+      setActiveStage(formStage);
+    });
+  });
+</script>
+
+<script>
+
+document.querySelectorAll('.faq-question').forEach(button => {
+    button.addEventListener('click', () => {
+      const faqItem = button.closest('.faq-item');
+      const answer = faqItem.querySelector('.faq-answer');
+      
+      faqItem.classList.toggle('active');
+      
+      // Close other open FAQs
+      document.querySelectorAll('.faq-item').forEach(item => {
+        if (item !== faqItem && item.classList.contains('active')) {
+          item.classList.remove('active');
+          item.querySelector('.faq-answer').style.maxHeight = '0';
+          item.querySelector('.faq-answer').style.paddingBottom = '0';
+        }
+      });
+      
+      // Toggle answer visibility
+      if (faqItem.classList.contains('active')) {
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+        answer.style.paddingBottom = '1.25rem';
+      } else {
+        answer.style.maxHeight = '0';
+        answer.style.paddingBottom = '0';
+      }
+    });
+  });
+
+  </script>
